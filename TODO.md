@@ -10,3 +10,4 @@ TODO
 * Add more licences.
 * Make the licence detection case insensitive.
 * Add support for --help and --licence options.
+* Replace all usage of "licence" to "license" when meaning "license".
