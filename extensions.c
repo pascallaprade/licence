@@ -21,41 +21,41 @@
 
 const char *EXTENSIONS[] =
 {
-	".c",
-	".cpp",
-	".cxx",
-	".cc",
-	".h",
-	".hpp",
-	".rb",
-	".py",
-	".sh",
-	".cs",
-	".java"
+    ".c",
+    ".cpp",
+    ".cxx",
+    ".cc",
+    ".h",
+    ".hpp",
+    ".rb",
+    ".py",
+    ".sh",
+    ".cs",
+    ".java"
 };
 
 Comment_style get_style_for_extension(Extension extension)
 {
-	switch (extension)
-	{
-		case C:
-		case H:
-		case JAVA:
-		return SLASH_STAR;
-		
-		case CPP:
-		case CXX:
-		case CC:
-		case HPP:
-		case CS:
-		return SLASH_SLASH;
-		
-		case RB:
-		case PY:
-		case SH:
-		return POUND;
-		
-		default:
-		return NOT_A_STYLE;
-	}
+    switch (extension)
+    {
+        case C:
+        case H:
+        case JAVA:
+        return SLASH_STAR;
+        
+        case CPP:
+        case CXX:
+        case CC:
+        case HPP:
+        case CS:
+        return SLASH_SLASH;
+        
+        case RB:
+        case PY:
+        case SH:
+        return POUND;
+        
+        default:
+        return NOT_A_STYLE;
+    }
 }

@@ -23,51 +23,51 @@
 /** Displays an error message in case of missing args. */
 void error_not_enough_args()
 {
-	fprintf(stderr, "Usage: licence -l <LICENCE> [-o] <FILE>\n");
+    fprintf(stderr, "Usage: licence -l <LICENCE> [-o] <FILE>\n");
 }
 
 /** Displays an error message in case of a missing licence arg. */
 void error_missing_licence()
 {
-	fprintf(stderr, "No licence provided.\n");
+    fprintf(stderr, "No licence provided.\n");
 }
 
 /** Displays an error message in case of a missing output arg. */
 void error_missing_output()
 {
-	fprintf(stderr, "No output file.\n");
-	error_not_enough_args();
+    fprintf(stderr, "No output file.\n");
+    error_not_enough_args();
 }
 
 /** Displays an error message if the licence given is not managed. */
 void error_not_a_licence(const char *string)
 {
-	fprintf(stderr,
-		"%s is not included in the present version.\n"
-		"Please write to <laprade.p@gmail.com> if you wish to include it.\n",
-		string
-	);
+    fprintf(stderr,
+        "%s is not included in the present version.\n"
+        "Please write to <laprade.p@gmail.com> if you wish to include it.\n",
+        string
+    );
 }
 
 /** Displays an error message if a file could not be opened. */
 void error_null_file(const char *string)
 {
-	fprintf(stderr,
-		"%s could not be opened.\n",
-		string
-	);
+    fprintf(stderr,
+        "%s could not be opened.\n",
+        string
+    );
 }
 
 /** Displays an error message if malloc could not allocate memory. */
 void error_malloc()
 {
-	fprintf(stderr, "Malloc failed. Terminating.");
+    fprintf(stderr, "Malloc failed. Terminating.");
 }
 
 /** Displays a warning if the user attempts uses the unimplemented -c option. */
 void error_comment_option()
 {
-	fprintf(stderr,
-		"The -c option is not yet implemented.\n"
-		"Defaulting to automatic detection.\n");
+    fprintf(stderr,
+        "The -c option is not yet implemented.\n"
+        "Defaulting to automatic detection.\n");
 }

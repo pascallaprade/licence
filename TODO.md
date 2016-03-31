@@ -14,4 +14,3 @@ TODO
 * Move source files inside src directory, and update build.sh in consequence.
 * Allow storing, or defining in argv, of default values for project name, etc.
 * Allow using the content of a file as licence.
-* Set standard for tabs.

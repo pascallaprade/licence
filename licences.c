@@ -19,57 +19,57 @@
 
 const char *LICENCES_NAMES[] =
 {
-	"GPL",
-	"LGPL",
-	"AGPL",
-	"APACHE",
-	"BSDÉ"
+    "GPL",
+    "LGPL",
+    "AGPL",
+    "APACHE",
+    "BSD3"
 };
 
 /** The licences managed by this program. */
 const char *LICENCES[] =
 {
-	/* GPLv3 */
-	"<one line to give the program's name and a brief idea of what it does.>\n"
+    /* GPLv3 */
+    "<one line to give the program's name and a brief idea of what it does.>\n"
     "Copyright (C) <year>  <name of author>\n"
-	"\n"
+    "\n"
     "This program is free software: you can redistribute it and/or modify\n"
     "it under the terms of the GNU General Public License as published by\n"
     "the Free Software Foundation, either version 3 of the License, or\n"
     "(at your option) any later version.\n"
-	"\n"
+    "\n"
     "This program is distributed in the hope that it will be useful,\n"
     "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
     "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
     "GNU General Public License for more details.\n"
-	"\n"
+    "\n"
     "You should have received a copy of the GNU General Public License\n"
     "along with this program.  If not, see <http://www.gnu.org/licenses/>.",
-	
-	/* LGPLv3 */
-	/* TODO(pascal) */
-	"",
-	
-	/* AGPLv3 */
-	"<one line to give the program's name and a brief idea of what it does.>\n"
+    
+    /* LGPLv3 */
+    /* TODO(pascal) */
+    "",
+    
+    /* AGPLv3 */
+    "<one line to give the program's name and a brief idea of what it does.>\n"
     "Copyright (C) <year>  <name of author>\n"
-	"\n"
+    "\n"
     "This program is free software: you can redistribute it and/or modify\n"
     "it under the terms of the GNU Affero General Public License as\n"
     "published by the Free Software Foundation, either version 3 of the\n"
     "License, or (at your option) any later version.\n"
-	"\n"
+    "\n"
     "This program is distributed in the hope that it will be useful,\n"
     "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
     "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
     "GNU Affero General Public License for more details.\n"
-	"\n"
+    "\n"
     "You should have received a copy of the GNU Affero General Public License\n"
     "along with this program.  If not, see <http://www.gnu.org/licenses/>.",
-	
-	/* APACHE2 */
-	"Copyright [yyyy] [name of copyright owner]\n"
-	"\n"
+    
+    /* APACHE2 */
+    "Copyright [yyyy] [name of copyright owner]\n"
+    "\n"
     "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
     "you may not use this file except in compliance with the License.\n"
     "You may obtain a copy of the License at\n"

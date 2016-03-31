@@ -20,13 +20,13 @@
 
 typedef enum Licence_id
 {
-	GPL3,
-	LGPL3,
-	AGPL3,
-	APACHE2,
-	BSD3,
-	NUMBER_OF_LICENCES,
-	NOT_A_LICENCE
+    GPL3,
+    LGPL3,
+    AGPL3,
+    APACHE2,
+    BSD3,
+    NUMBER_OF_LICENCES,
+    NOT_A_LICENCE
 } Licence_id;
 
 extern const char *LICENCES_NAMES[];

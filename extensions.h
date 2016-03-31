@@ -22,18 +22,18 @@
 
 typedef enum Extension
 {
-	C,
-	CPP,
-	CXX,
-	CC,
-	H,
-	HPP,
-	RB,
-	PY,
-	SH,
-	CS,
-	JAVA,
-	NUMBER_OF_EXTENSIONS
+    C,
+    CPP,
+    CXX,
+    CC,
+    H,
+    HPP,
+    RB,
+    PY,
+    SH,
+    CS,
+    JAVA,
+    NUMBER_OF_EXTENSIONS
 } Extension;
 
 extern const char *EXTENSIONS[];

@@ -20,19 +20,19 @@
 
 typedef enum Comment_style
 {
-	SLASH_STAR,
-	SLASH_SLASH,
-	POUND,
-	NUMBER_OF_STYLES,
-	NOT_A_STYLE
+    SLASH_STAR,
+    SLASH_SLASH,
+    POUND,
+    NUMBER_OF_STYLES,
+    NOT_A_STYLE
 } Comment_style;
 
 typedef enum Comment_type
 {
-	START,
-	NORMAL,
-	END,
-	NUMBER_OF_TYPES
+    START,
+    NORMAL,
+    END,
+    NUMBER_OF_TYPES
 } Comment_type;
 
 extern const char *COMMENTS[][NUMBER_OF_TYPES];
