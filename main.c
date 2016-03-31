@@ -1,4 +1,4 @@
-/* licence : a tool for prepending a licence to files of a project.
+/* licence : a tool for prepending a license to files of a project.
  * Copyright (C) 2016  Pascal Laprade <laprade.p@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #include "comments.h"
 #include "errors.h"
 #include "extensions.h"
-#include "licences.h"
+#include "licenses.h"
 
 #ifdef __win32
 #define NEW_LINE "\r\n"
@@ -33,7 +33,7 @@
 /** The possible options from the argv. */
 typedef enum Option
 {
-    LICENCE,
+    LICENSE,
     OUTPUT,
     COMMENT
 } Option;
@@ -47,7 +47,7 @@ const char OPTIONS[] =
 
 /** Prototypes. */
 char get_opt(char *string);
-Licence_id get_licence_id_from_string(const char *string);
+License_id get_license_id_from_string(const char *string);
 Comment_style get_comment_style(const char *filename);
 
 int prepend_to_file(const char *filename, const char *string,
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     
     char *output = NULL;
     
-    Licence_id id = NOT_A_LICENCE;
+    License_id id = NOT_A_LICENSE;
     
     Comment_style style = NOT_A_STYLE;
     
@@ -73,19 +73,19 @@ int main(int argc, char *argv[])
     {
         char opt = get_opt(argv[i]);
         
-        if (opt == OPTIONS[LICENCE])
+        if (opt == OPTIONS[LICENSE])
         {
             if (argc >= (i + 1))
             {
-                const char *licence = argv[i + 1];
+                const char *license = argv[i + 1];
                 
-                if (licence != NULL)
+                if (license != NULL)
                 {
-                    id = get_licence_id_from_string(licence);
+                    id = get_license_id_from_string(license);
                     
-                    if (id == NOT_A_LICENCE)
+                    if (id == NOT_A_LICENSE)
                     {
-                        error_not_a_licence(licence);
+                        error_not_a_license(license);
                         
                         return 1;
                     }
@@ -113,9 +113,9 @@ int main(int argc, char *argv[])
     /* We should know the licence and the output file by now,
        if not, there is a problem! */
     
-    if (id == NOT_A_LICENCE)
+    if (id == NOT_A_LICENSE)
     {
-        error_missing_licence();
+        error_missing_license();
         
         return 1;
     }
@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
     }
     
     /* And we can execute! */
-    return prepend_to_file(output, LICENCES[id], style);
+    return prepend_to_file(output, LICENSES[id], style);
 }
 
 /** Finds an option in a given string.
@@ -162,18 +162,18 @@ char get_opt(char *string)
     return opt;
 }
 
-/** Parses a string in order to find a matching licence */
-Licence_id get_licence_id_from_string(const char *string)
+/** Parses a string in order to find a matching license. */
+License_id get_license_id_from_string(const char *string)
 {
-    for (int i = 0; i < NUMBER_OF_LICENCES; i++)
+    for (int i = 0; i < NUMBER_OF_LICENSES; i++)
     {
-        if (strcmp(LICENCES_NAMES[i], string) == 0)
+        if (strcmp(LICENSE_NAMES[i], string) == 0)
         {
             return i;
         }
     }
     
-    return NOT_A_LICENCE;
+    return NOT_A_LICENSE;
 }
 
 /** Finds a comment style for a given file extension. */
@@ -329,6 +329,8 @@ int prepend_to_file(const char *filename, const char *string,
     
     fclose(temp_file);
     fclose(out_file);
+    temp_file = NULL;
+    out_file = NULL;
     
     remove(filename);
     rename(temp_file_path, filename);

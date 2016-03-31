@@ -1,4 +1,4 @@
-/* licence : a tool for prepending a licence to files of a project.
+/* licence : a tool for prepending a license to files of a project.
  * Copyright (C) 2016  Pascal Laprade <laprade.p@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -27,9 +27,9 @@ void error_not_enough_args()
 }
 
 /** Displays an error message in case of a missing licence arg. */
-void error_missing_licence()
+void error_missing_license()
 {
-    fprintf(stderr, "No licence provided.\n");
+    fprintf(stderr, "No license provided.\n");
 }
 
 /** Displays an error message in case of a missing output arg. */
@@ -40,7 +40,7 @@ void error_missing_output()
 }
 
 /** Displays an error message if the licence given is not managed. */
-void error_not_a_licence(const char *string)
+void error_not_a_license(const char *string)
 {
     fprintf(stderr,
         "%s is not included in the present version.\n"

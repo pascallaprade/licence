@@ -1,4 +1,4 @@
-/* licence : a tool for prepending a licence to files of a project.
+/* licence : a tool for prepending a license to files of a project.
  * Copyright (C) 2016  Pascal Laprade <laprade.p@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify

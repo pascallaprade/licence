@@ -1,4 +1,4 @@
-/* licence : a tool for prepending a licence to files of a project.
+/* licence : a tool for prepending a license to files of a project.
  * Copyright (C) 2016  Pascal Laprade <laprade.p@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,9 @@
 #define __errors_h
 
 void error_not_enough_args();
-void error_missing_licence();
+void error_missing_license();
 void error_missing_output();
-void error_not_a_licence(const char *string);
+void error_not_a_license(const char *string);
 
 void error_null_file(const char *string);
 void error_malloc();
