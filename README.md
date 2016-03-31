@@ -1,15 +1,16 @@
 licence
 ===============================================================
 
-A tool for prepending a licence to files of a project
+A tool for prepending a licence to files of a project.
 
-https://cmus.github.io/
+Licence : French for license.
+
+https://github.com/pascallaprade/licence
 
 Copyright © 2016 Pascal Laprade <laprade.p@gmail.com>
 
 All files in the licence software have been prepended with the GNU GPLv3
 licence using the licence software itself.
-
 
 
 Building
@@ -35,12 +36,12 @@ Reporting Bugs
 --------------
 
 After a crash send bug report with last lines of terminal output to
-cmus-devel@lists.sourceforge.net.
+https://github.com/pascallaprade/licence/issues.
 
 
 Git Repository
 --------------
 
-https://github.com/pascallaprade/cmus
+https://github.com/pascallaprade/licence
 
-    $ git clone https://github.com/pascallaprade/cmus.git
+    $ git clone https://github.com/pascallaprade/licence.git
