@@ -15,4 +15,3 @@ TODO
 * Allow storing, or defining in argv, of default values for project name, etc.
 * Allow using the content of a file as licence.
 * Set standard for tabs.
-* Remove c11 standard, it should be to the user's choice.
