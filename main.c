@@ -137,9 +137,9 @@ int main(int argc, char *argv[])
 }
 
 /** Finds an option in a given string.
-   Always return a value, either the space char,
-   the letter of the option present in the string,
-   or a hyphen if it is an unknown option. */
+    Always return a value, either the space char,
+    the letter of the option present in the string,
+    or a hyphen if it is an unknown option. */
 char get_opt(char *string)
 {
     char opt = ' ';
@@ -165,11 +165,37 @@ char get_opt(char *string)
 /** Parses a string in order to find a matching license. */
 License_id get_license_id_from_string(const char *string)
 {
-    for (int i = 0; i < NUMBER_OF_LICENSES; i++)
+    int length_of_string = strlen(string);
+    
+    for (int lic = 0; lic < NUMBER_OF_LICENSES; lic++)
     {
-        if (strcmp(LICENSE_NAMES[i], string) == 0)
+        /* Including the null character in this string loop */
+        for (int i = 0; i < length_of_string + 1; i++)
         {
-            return i;
+            /* End of both strings, they are the same. */
+            if (string[i] == '\0' && LICENSE_NAMES[lic][i] == '\0')
+            {
+                return lic;
+            }
+            
+            /* The given license is longer than the tested known license. */
+            if (LICENSE_NAMES[lic][i] == '\0')
+            {
+                break;
+            }
+            
+            char capital_char = string[i];
+            
+            if (capital_char >= 'a' && capital_char <= 'z')
+            {
+                capital_char -= ('a' - 'A');
+            }
+            
+            /* The given license isn't the tested known license. */
+            if (capital_char != LICENSE_NAMES[lic][i])
+            {
+                break;
+            }
         }
     }
     
