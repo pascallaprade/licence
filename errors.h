@@ -24,7 +24,6 @@ void error_missing_output();
 void error_not_a_license(const char *string);
 
 void error_null_file(const char *string);
-void error_malloc();
 
 void error_comment_option();
 

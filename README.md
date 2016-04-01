@@ -7,7 +7,7 @@ licence is free software distributed under the terms of the GNU GPLv3 license.
 It guarantees to you, the user, the freedom to run the software, to read and
 modify its source code, and to redistribute exact or modified copies of it.
 To learn more about free software, please read
-<http://www.gnu.org/philosophy/free-sw.en.html>
+<http://www.gnu.org/philosophy/free-sw.en.html>.
 
 Licence : French for license.
 

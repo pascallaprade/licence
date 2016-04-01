@@ -58,12 +58,6 @@ void error_null_file(const char *string)
     );
 }
 
-/** Displays an error message if malloc could not allocate memory. */
-void error_malloc()
-{
-    fprintf(stderr, "Malloc failed. Terminating.");
-}
-
 /** Displays a warning if the user attempts uses the unimplemented -c option. */
 void error_comment_option()
 {

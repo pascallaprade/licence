@@ -192,56 +192,47 @@ Comment_style get_comment_style(const char *filename)
     }
     
     /* If there is no dot in the filename, defaulting to the pound
-       comment style. */
+       comment style, it is probably a script. */
     if (index_of_dot <= 0)
     {
         return POUND;
     }
     
-    // TODO(pascal): Use an array instead of malloc. Wastes a few bytes,
-    // but reduces risks of failure.
-    char *extension =
-        malloc(((length_of_filename - index_of_dot) * sizeof(*extension)) + 1);
-    
-    if (extension == NULL)
+    for (int ext = 0; ext < NUMBER_OF_EXTENSIONS; ext++)
     {
-        error_malloc();
-        
-        return NOT_A_STYLE;
-    }
-    
-    for (int i = index_of_dot; i < length_of_filename; i++)
-    {
-        extension[i - index_of_dot] = filename[i];
-    }
-    
-    Comment_style style = NOT_A_STYLE;
-    
-    for (int i = 0; i < NUMBER_OF_EXTENSIONS; i++)
-    {
-        if (strcmp(EXTENSIONS[i], extension) == 0)
+        /* Including the null character in this string loop */
+        for (int i = index_of_dot; i < length_of_filename + 1; i++)
         {
-            style = get_style_for_extension(i);
+            /* End of both strings, they are the same. */
+            if (filename[i] == '\0' &&
+                EXTENSIONS[ext][i - index_of_dot] == '\0')
+            {
+                return get_style_for_extension(ext);
+            }
             
-            break;
+            /* The filename's extension is longer than the tested extension. */
+            if (EXTENSIONS[ext][i - index_of_dot] == '\0')
+            {
+                break;
+            }
+            
+            /* The filename's extension is not the same as the tested one. */
+            if (filename[i] != EXTENSIONS[ext][i - index_of_dot])
+            {
+                break;
+            }
         }
     }
     
-    free(extension);
-    extension = NULL;
-    
-    /* Defaulting to pound style if the file extension is unknown. */
-    if (style == NOT_A_STYLE)
-    {
-        return POUND;
-    }
-    
-    return style;
+    /* TODO(pascal) : Returning the pound comment-style for now, but it would
+       be nice to prompt the user to explicitly define the comment-style
+       character(s) instead of enforcing this. */
+    return POUND;
 }
 
 /** Prepends a string to a file.
-   Prepends a given string to a file, using a given comment style.
-   Returns 1 if an error happened, 0 otherwise. */
+    Prepends a given string to a file, using a given comment style.
+    Returns 1 if an error happened, 0 otherwise. */
 int prepend_to_file(const char *filename, const char *string,
     Comment_style style)
 {
