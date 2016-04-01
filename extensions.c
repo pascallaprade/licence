@@ -31,7 +31,14 @@ const char *EXTENSIONS[] =
     ".py",
     ".sh",
     ".cs",
-    ".java"
+    ".java",
+    ".asm",
+    ".S",
+    ".s",
+    ".el",
+    ".lisp",
+    ".cl",
+    ".clj"
 };
 
 Comment_style get_style_for_extension(Extension extension)
@@ -54,6 +61,17 @@ Comment_style get_style_for_extension(Extension extension)
         case PY:
         case SH:
         return POUND;
+        
+        case ASM:
+        case CAPITAL_S:
+        case LOWERCASE_S:
+        return SEMICOLON;
+        
+        case EL:
+        case LISP:
+        case CL:
+        case CLJ:
+        return FOUR_SEMICOLONS;
         
         default:
         return NOT_A_STYLE;

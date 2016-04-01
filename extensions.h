@@ -33,6 +33,13 @@ typedef enum Extension
     SH,
     CS,
     JAVA,
+    ASM,
+    CAPITAL_S,
+    LOWERCASE_S,
+    EL,
+    LISP,
+    CL,
+    CLJ,
     NUMBER_OF_EXTENSIONS
 } Extension;
 

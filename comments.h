@@ -23,6 +23,10 @@ typedef enum Comment_style
     SLASH_STAR,
     SLASH_SLASH,
     POUND,
+    SEMICOLON,
+    TWO_SEMICOLONS,
+    THREE_SEMICOLONS,
+    FOUR_SEMICOLONS,
     NUMBER_OF_STYLES,
     NOT_A_STYLE
 } Comment_style;
