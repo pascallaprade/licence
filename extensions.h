@@ -40,6 +40,7 @@ typedef enum Extension
     LISP,
     CL,
     CLJ,
+    JS,
     NUMBER_OF_EXTENSIONS
 } Extension;
 

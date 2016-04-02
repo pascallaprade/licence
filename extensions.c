@@ -38,16 +38,17 @@ const char *EXTENSIONS[] =
     ".el",
     ".lisp",
     ".cl",
-    ".clj"
+    ".clj",
+    ".js"
 };
 
+/** Obtains the comment style associated to a language based on an extension. */
 Comment_style get_style_for_extension(Extension extension)
 {
     switch (extension)
     {
         case C:
         case H:
-        case JAVA:
         return SLASH_STAR;
         
         case CPP:
@@ -55,6 +56,8 @@ Comment_style get_style_for_extension(Extension extension)
         case CC:
         case HPP:
         case CS:
+        case JAVA:
+        case JS:
         return SLASH_SLASH;
         
         case RB:
