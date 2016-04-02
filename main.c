@@ -226,27 +226,11 @@ Comment_style get_comment_style(const char *filename)
     
     for (int ext = 0; ext < NUMBER_OF_EXTENSIONS; ext++)
     {
-        /* Including the null character in this string loop */
-        for (int i = index_of_dot; i < length_of_filename + 1; i++)
+        const char *extension = filename + index_of_dot;
+        
+        if (strcmp(extension, EXTENSIONS[ext]) == 0)
         {
-            /* End of both strings, they are the same. */
-            if (filename[i] == '\0' &&
-                EXTENSIONS[ext][i - index_of_dot] == '\0')
-            {
-                return get_style_for_extension(ext);
-            }
-            
-            /* The filename's extension is longer than the tested extension. */
-            if (EXTENSIONS[ext][i - index_of_dot] == '\0')
-            {
-                break;
-            }
-            
-            /* The filename's extension is not the same as the tested one. */
-            if (filename[i] != EXTENSIONS[ext][i - index_of_dot])
-            {
-                break;
-            }
+            return get_style_for_extension(ext);
         }
     }
     
