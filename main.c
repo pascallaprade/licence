@@ -24,7 +24,7 @@
 #include "extensions.h"
 #include "licenses.h"
 
-#ifdef __win32
+#ifdef _WIN32
 #define NEW_LINE "\r\n"
 #else
 #define NEW_LINE "\n"
