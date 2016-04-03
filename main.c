@@ -30,6 +30,8 @@
 #define NEW_LINE "\n"
 #endif
 
+#define BUFFER_LENGTH 4096
+
 /** The possible options from the argv. */
 typedef enum Option
 {
@@ -256,8 +258,6 @@ int prepend_to_file(const char *filename, const char *string,
         error_null_file(temp_file_path);
     }
     
-    const int BUFFER_LENGTH = 80;
-    
     char buffer[BUFFER_LENGTH];
     
     int buffer_index = 0;
@@ -317,14 +317,11 @@ int prepend_to_file(const char *filename, const char *string,
     
     /* Append the out_file to the licence, then switch the files. */
     
-    const int TAILLE_BUFFER_LECTURE = 4096;
-    char buffer_lecture[TAILLE_BUFFER_LECTURE];
-    
     while (!feof(out_file))
     {
-        if (fgets(buffer_lecture, TAILLE_BUFFER_LECTURE - 1, out_file) != NULL)
+        if (fgets(buffer, BUFFER_LENGTH - 1, out_file) != NULL)
         {
-            fprintf(temp_file, "%s", buffer_lecture);
+            fprintf(temp_file, "%s", buffer);
         }
     }
     
