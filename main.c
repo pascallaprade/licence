@@ -24,12 +24,6 @@
 #include "extensions.h"
 #include "licenses.h"
 
-#ifdef _WIN32
-#define NEW_LINE "\r\n"
-#else
-#define NEW_LINE "\n"
-#endif
-
 #define BUFFER_LENGTH 4096
 
 /** The possible options from the argv. */
@@ -272,8 +266,8 @@ int prepend_to_file(const char *filename, const char *string,
         {
             buffer[buffer_index] = '\0';
             
-            fprintf(temp_file, "%s%s%s",
-                buffer, NEW_LINE, COMMENTS[style][NORMAL]);
+            fprintf(temp_file, "%s\n%s",
+                buffer, COMMENTS[style][NORMAL]);
             
             buffer_index = 0;
         }
@@ -281,7 +275,7 @@ int prepend_to_file(const char *filename, const char *string,
         {
             buffer[buffer_index] = '\0';
             
-            fprintf(temp_file, "%s%s", buffer, NEW_LINE);
+            fprintf(temp_file, "%s\n", buffer);
         }
         else
         {
@@ -300,10 +294,10 @@ int prepend_to_file(const char *filename, const char *string,
     
     if (strcmp(COMMENTS[style][NORMAL], COMMENTS[style][END]) != 0)
     {
-        fprintf(temp_file, "%s%s", COMMENTS[style][END], NEW_LINE);
+        fprintf(temp_file, "%s\n", COMMENTS[style][END]);
     }
     
-    fprintf(temp_file, "%s", NEW_LINE);
+    fprintf(temp_file, "\n");
     
     FILE *out_file = NULL;
     out_file = fopen(filename, "r");
