@@ -310,9 +310,14 @@ int prepend_to_file(const char *filename, const char *string,
     
     if (out_file == NULL)
     {
-        error_null_file(filename);
+        out_file = fopen(filename, "w+");
         
-        return 1;
+        if (out_file == NULL)
+        {
+            error_null_file(filename);
+            
+            return 1;
+        }
     }
     
     /* Append the out_file to the licence, then switch the files. */

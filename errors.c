@@ -53,7 +53,7 @@ void error_not_a_license(const char *string)
 void error_null_file(const char *string)
 {
     fprintf(stderr,
-        "%s could not be opened.\n",
+        "%s could not be opened or created.\n",
         string
     );
 }
