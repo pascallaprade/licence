@@ -2,5 +2,6 @@
 
 gcc -Wall -pedantic -std=c99 \
 	-o licence \
-	comments.c errors.c extensions.c licenses.c main.c \
+	src/comments.c src/errors.c src/extensions.c src/licenses.c src/main.c \
+	src/prepend.c src/utils.c \
 	-O3

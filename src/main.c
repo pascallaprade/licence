@@ -1,53 +1,47 @@
 /* licence : a tool for prepending a license to files of a project.
  * Copyright (C) 2016  Pascal Laprade <laprade.p@gmail.com>
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
-#include "comments.h"
+#include "prepend.h"
 #include "errors.h"
-#include "extensions.h"
-#include "licenses.h"
-
-#define BUFFER_LENGTH 4096
+#include "utils.h"
 
 /** The possible options from the argv. */
 typedef enum Option
 {
     LICENSE,
     OUTPUT,
-    COMMENT
+    COMMENT,
+    FULL_LICENSE
 } Option;
 
 const char OPTIONS[] =
 {
     'l',
     'o',
-    'c'
+    'c',
+    'f'
 };
 
 /** Prototypes. */
 char get_opt(char *string);
-License_id get_license_id_from_string(const char *string);
-Comment_style get_comment_style(const char *filename);
-
-int prepend_to_file(const char *filename, const char *string,
-    Comment_style style);
 
 /** The main entry point. */
 int main(int argc, char *argv[])
@@ -55,43 +49,23 @@ int main(int argc, char *argv[])
     if (argc < 4)
     {
         error_not_enough_args();
-        
         return 1;
     }
-    
-    char *output = NULL;
-    
-    License_id id = NOT_A_LICENSE;
-    
-    Comment_style style = NOT_A_STYLE;
-    
+
+    char **output = NULL;
+    int output_len = 0;
+    int print_full_license = 0;
+    char *license_name = NULL;
+
     for (int i = 1; i < argc; i++)
     {
         char opt = get_opt(argv[i]);
-        
+
         if (opt == OPTIONS[LICENSE])
         {
             if (argc >= (i + 1))
             {
-                const char *license = argv[i + 1];
-                
-                if (license != NULL)
-                {
-                    id = get_license_id_from_string(license);
-                    
-                    if (id == NOT_A_LICENSE)
-                    {
-                        error_not_a_license(license);
-                        
-                        return 1;
-                    }
-                }
-                else
-                {
-                    // TODO(pascal): Write error message.
-                    
-                    return 1;
-                }
+                license_name = argv[i + 1];
             }
         }
         else if (opt == OPTIONS[COMMENT])
@@ -100,36 +74,59 @@ int main(int argc, char *argv[])
                but we need only to parse the comment-style name. */
             error_comment_option();
         }
-        else if (opt == OPTIONS[OUTPUT] || opt == ' ')
+        else if (opt == OPTIONS[FULL_LICENSE])
         {
-            output = argv[i];
+            print_full_license = 1;
+        }
+        else if (output == NULL && (opt == OPTIONS[OUTPUT] || opt == ' '))
+        {
+            output = (argv + 1) + i;
+            output_len = (argc - 1) - i;
         }
     }
-    
+
     /* We should know the licence and the output file by now,
        if not, there is a problem! */
-    
-    if (id == NOT_A_LICENSE)
+
+    License_id id = NOT_A_LICENSE;
+    Comment_style style = NOT_A_STYLE;
+
+    if (license_name != NULL)
+    {
+        id = get_license_id_from_string(license_name);
+
+        if (id == NOT_A_LICENSE)
+        {
+            error_not_a_license(license_name);
+            return 1;
+        }
+    }
+    else
     {
         error_missing_license();
-        
         return 1;
     }
-    
+
     if (output == NULL)
     {
         error_missing_output();
-        
         return 1;
     }
-    
-    if (style == NOT_A_STYLE)
+
+    const char *license = NULL;
+
+    if (print_full_license)
     {
-        style = get_comment_style(output);
+        license = FULL_LICENSES[id];
+        style = NONE;
     }
-    
+    else
+    {
+        license = LICENSES[id];
+    }
+
     /* And we can execute! */
-    return prepend_to_file(output, LICENSES[id], style);
+    return prepend_to_file(output, output_len, license, style);
 }
 
 /** Finds an option in a given string.
@@ -139,12 +136,13 @@ int main(int argc, char *argv[])
 char get_opt(char *string)
 {
     char opt = ' ';
-    
+
     if (strlen(string) == 2)
     {
         if (string[1] == 'l' ||
             string[1] == 'o' ||
-            string[1] == 'c')
+            string[1] == 'c' ||
+            string[1] == 'f')
         {
             opt = string[1];
         }
@@ -154,183 +152,6 @@ char get_opt(char *string)
             opt = '-';
         }
     }
-    
+
     return opt;
-}
-
-/** Parses a string in order to find a matching license. */
-License_id get_license_id_from_string(const char *string)
-{
-    int length_of_string = strlen(string);
-    
-    for (int lic = 0; lic < NUMBER_OF_LICENSES; lic++)
-    {
-        /* Including the null character in this string loop */
-        for (int i = 0; i < length_of_string + 1; i++)
-        {
-            /* End of both strings, they are the same. */
-            if (string[i] == '\0' && LICENSE_NAMES[lic][i] == '\0')
-            {
-                return lic;
-            }
-            
-            /* The given license is longer than the tested known license. */
-            if (LICENSE_NAMES[lic][i] == '\0')
-            {
-                break;
-            }
-            
-            char capital_char = string[i];
-            
-            if (capital_char >= 'a' && capital_char <= 'z')
-            {
-                capital_char -= ('a' - 'A');
-            }
-            
-            /* The given license isn't the tested known license. */
-            if (capital_char != LICENSE_NAMES[lic][i])
-            {
-                break;
-            }
-        }
-    }
-    
-    return NOT_A_LICENSE;
-}
-
-/** Finds a comment style for a given file extension. */
-Comment_style get_comment_style(const char *filename)
-{
-    int length_of_filename = strlen(filename);
-    
-    int index_of_dot = length_of_filename;
-    
-    for (; index_of_dot >= 0; index_of_dot--)
-    {
-        if (filename[index_of_dot] == '.')
-        {
-            break;
-        }
-    }
-    
-    /* If there is no dot in the filename, defaulting to the pound
-       comment style, it is probably a script. */
-    if (index_of_dot <= 0)
-    {
-        return POUND;
-    }
-    
-    for (int ext = 0; ext < NUMBER_OF_EXTENSIONS; ext++)
-    {
-        const char *extension = filename + index_of_dot;
-        
-        if (strcmp(extension, EXTENSIONS[ext]) == 0)
-        {
-            return get_style_for_extension(ext);
-        }
-    }
-    
-    /* TODO(pascal) : Returning the pound comment-style for now, but it would
-       be nice to prompt the user to explicitly define the comment-style
-       character(s) instead of enforcing this. */
-    return POUND;
-}
-
-/** Prepends a string to a file.
-    Prepends a given string to a file, using a given comment style.
-    Returns 1 if an error happened, 0 otherwise. */
-int prepend_to_file(const char *filename, const char *string,
-    Comment_style style)
-{
-    const char *temp_file_path = "__temp_cat_licence.tmp";
-    
-    FILE *temp_file = NULL;
-    temp_file = fopen(temp_file_path, "w+");
-    
-    if (temp_file == NULL)
-    {
-        error_null_file(temp_file_path);
-    }
-    
-    char buffer[BUFFER_LENGTH];
-    
-    int buffer_index = 0;
-    
-    int length_of_string = strlen(string);
-    
-    fprintf(temp_file, "%s", COMMENTS[style][START]);
-    
-    for (int i = 0; i < length_of_string; i++)
-    {
-        if (string[i] == '\n')
-        {
-            buffer[buffer_index] = '\0';
-            
-            fprintf(temp_file, "%s\n%s",
-                buffer, COMMENTS[style][NORMAL]);
-            
-            buffer_index = 0;
-        }
-        else if (i == length_of_string - 1)
-        {
-            buffer[buffer_index] = '\0';
-            
-            fprintf(temp_file, "%s\n", buffer);
-        }
-        else
-        {
-            if (buffer_index == BUFFER_LENGTH - 1)
-            {
-                buffer[buffer_index] = '\0';
-                
-                fprintf(temp_file, "%s", buffer);
-                
-                buffer_index = 0;
-            }
-            
-            buffer[buffer_index++] = string[i];
-        }
-    }
-    
-    if (strcmp(COMMENTS[style][NORMAL], COMMENTS[style][END]) != 0)
-    {
-        fprintf(temp_file, "%s\n", COMMENTS[style][END]);
-    }
-    
-    fprintf(temp_file, "\n");
-    
-    FILE *out_file = NULL;
-    out_file = fopen(filename, "r");
-    
-    if (out_file == NULL)
-    {
-        out_file = fopen(filename, "w+");
-        
-        if (out_file == NULL)
-        {
-            error_null_file(filename);
-            
-            return 1;
-        }
-    }
-    
-    /* Append the out_file to the licence, then switch the files. */
-    
-    while (!feof(out_file))
-    {
-        if (fgets(buffer, BUFFER_LENGTH - 1, out_file) != NULL)
-        {
-            fprintf(temp_file, "%s", buffer);
-        }
-    }
-    
-    fclose(temp_file);
-    fclose(out_file);
-    temp_file = NULL;
-    out_file = NULL;
-    
-    remove(filename);
-    rename(temp_file_path, filename);
-    
-    return 0;
 }

@@ -1,5 +1,5 @@
 /* licence : a tool for prepending a license to files of a project.
- * Copyright (C) 2016  Pascal Laprade <laprade.p@gmail.com>
+ * Copyright (C) 2017  Pascal Laprade <laprade.p@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,22 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-#ifndef __licenses_h
-#define __licenses_h
+#ifndef __prepend_h
+#define __prepend_h
 
-typedef enum License_id
-{
-    GPL3,
-    LGPL3,
-    AGPL3,
-    APACHE2,
-    BSD3,
-    NUMBER_OF_LICENSES,
-    NOT_A_LICENSE
-} License_id;
+#include "comments.h"
 
-extern const char *LICENSE_NAMES[];
-extern const char *LICENSES[];
-extern const char *FULL_LICENSES[];
+int prepend_to_file(char **files, int files_len, const char *string,
+    Comment_style style);
 
-#endif
+#endif // __prepend_h
